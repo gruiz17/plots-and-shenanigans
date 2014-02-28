@@ -7,7 +7,7 @@ title: YC Word Cloud
 
 d3.csv("../data/yc/wordcount_sorted.csv", function(csv) {
   var topHundred = csv.slice(0,99);
-  wordObjs = _.map(topHundred, function(wordData){
+  var wordObjs = _.map(topHundred, function(wordData){
     function wordObj(word, frequency) {
       this.word = word;
       this.frequency = frequency;
