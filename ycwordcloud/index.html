@@ -4,4 +4,15 @@ title: YC Word Cloud
 ---
 <h2>A word cloud based on descriptions of Y-Combinator companies.</h2>
 <script>
+
+d3.csv("../data/yc/wordcount_sorted.csv", function(csv) {
+  var topHundred = csv.slice(0,99);
+  wordObjs = _.map(topHundred, function(wordData){
+    function wordObj(word, frequency) {
+      this.word = word;
+      this.frequency = frequency;
+    } return new wordObj(wordData.word, wordData.count)})
+  console.log(wordObjs[0])
+});
+
 </script>
