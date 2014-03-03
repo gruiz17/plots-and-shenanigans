@@ -3,7 +3,9 @@ layout: default
 title: YC Word Cloud
 ---
 <h2>A word cloud based on descriptions of Y-Combinator companies.</h2>
-<br>
+<hr>
+<a href="/">Back to main menu.</a>
+<hr>
 <div id="vis">
 <script>
 
@@ -60,4 +62,5 @@ d3.csv("../data/yc/wordcount_sorted.csv", function(csv) {
       .style("color", function(d){return d.colorVal});
 });
 </script>
+</div>
 </div>
