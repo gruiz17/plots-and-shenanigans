@@ -26,10 +26,12 @@ title: Death Row
 
 
 d3.csv("../data/deathrow/deathrow.csv", function(csv) {
+  //racial demographics graph
   var races = ['Black','White','Hispanic'];
   for (var i = 0; i < races.length; i++) {
     var executionsByRace = _.filter(csv, function(execution) { return (execution.race == races[i])});
     console.log(races[i] + ": " + executionsByRace.length.toString());
   }
+  ///////
 });
 </script>

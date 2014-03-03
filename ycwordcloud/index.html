@@ -3,16 +3,61 @@ layout: default
 title: YC Word Cloud
 ---
 <h2>A word cloud based on descriptions of Y-Combinator companies.</h2>
+<br>
+<div id="vis">
 <script>
+
+function shuffle(o){
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
 
 d3.csv("../data/yc/wordcount_sorted.csv", function(csv) {
   var topHundred = csv.slice(0,99);
-  var wordObjs = _.map(topHundred, function(wordData){
-    function wordObj(word, frequency) {
+  var wordObjs = _.map(topHundred, function(wordData) {
+    function wordObj(word, count, px) {
       this.word = word;
-      this.frequency = frequency;
-    } return new wordObj(wordData.word, wordData.count)})
-  console.log(wordObjs[0])
-});
+      this.count = count;
+      this.px = px;
+    } return new wordObj(wordData.word, wordData.count, (Number(wordData.count)*1.8).toString());
+  });
 
+  var uniques = [];
+  var colorRanges = [];
+  var randColors = [];
+
+  for (var i = 0; i <= 100; i++) {
+    var letters = "0123456789ABCDEF".split('');
+    var color = '#'
+    for (var j = 0; j < 6; j++) {
+      color += letters[Math.round(Math.random() * 15)];
+    }
+    randColors.push(color);
+  }
+
+  for (var i = 0; i < wordObjs.length; i++) {
+    if ((uniques.indexOf(wordObjs[i].count) >= 0) == false) {
+      uniques.push(wordObjs[i].count);
+      var colorRange = {count: wordObjs[i].count, colorVal: randColors[i]}
+      colorRanges.push(colorRange);
+    }
+  }
+
+  for (var j = 0; j < wordObjs.length; j++) {
+    for (var k = 0; k < colorRanges.length; k++) {
+      if (wordObjs[j].count == colorRanges[k].count) {
+        wordObjs[j].colorVal = colorRanges[k].colorVal;
+      }
+    }
+  }
+
+  main = d3.select('#vis')
+      .selectAll("span")
+      .data(shuffle(wordObjs))
+      .enter().append("span")
+      .text(function(d){return d.word + " "})
+      .style("font-size", function(d){return d.px + "px"})
+      .style("color", function(d){return d.colorVal});
+});
 </script>
+</div>
