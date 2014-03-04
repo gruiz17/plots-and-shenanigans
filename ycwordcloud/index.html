@@ -39,7 +39,7 @@ d3.csv("../data/yc/wordcount_sorted.csv", function(csv) {
   }
 
   for (var i = 0; i < wordObjs.length; i++) {
-    if ((uniques.indexOf(wordObjs[i].count) >= 0) == false) {
+    if ((uniques.indexOf(wordObjs[i].count) >= 0) === false) {
       uniques.push(wordObjs[i].count);
       var colorRange = {count: wordObjs[i].count, colorVal: randColors[i]}
       colorRanges.push(colorRange);
@@ -48,7 +48,7 @@ d3.csv("../data/yc/wordcount_sorted.csv", function(csv) {
 
   for (var j = 0; j < wordObjs.length; j++) {
     for (var k = 0; k < colorRanges.length; k++) {
-      if (wordObjs[j].count == colorRanges[k].count) {
+      if (wordObjs[j].count === colorRanges[k].count) {
         wordObjs[j].colorVal = colorRanges[k].colorVal;
       }
     }
