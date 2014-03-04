@@ -3,9 +3,17 @@ layout: default
 title: Death Row
 ---
 <h2>Various infographics about executed offenders in Texas since 1982.</h2>
+<hr>
+<h3>Racial Demographics Pie Chart</h3>
+<p>A pie chart representation of the racial demographics of the executed criminals of Texas. Text color matched to respective color on pie chart.</p>
+<div class="container">
 <div id="race">
-  <svg id="donut" width="600" height="400"></svg>
-</div>
+  <div style="float:left">
+    <svg id="donut" width="350" height="370"></svg>
+  </div>
+  <div id="raceDescription" style="float:left;padding-top:100px">
+  </div>
+
 <script>
 
 function sum(a,b) {
@@ -33,6 +41,14 @@ d3.csv("../data/deathrow/deathrow.csv", function(csv) {
 
   var cScale = d3.scale.linear().domain([0,totalCount]).range([0,2*Math.PI]);
   var vis = d3.select('#donut');
+  var description = d3.select('#raceDescription')
+
+  description.selectAll("p")
+    .data(raceMap)
+    .enter().append("p")
+    .text(function(d){return d.race + ": " + ((Math.round(Number(d.count)*100*100/totalCount))/100).toString() + "%, " + d.count + " executions";})
+    .style("color", function(d){return d.colorVal;})
+    .style("font-size","25px");
 
   console.log(cScale);
 
@@ -56,8 +72,11 @@ d3.csv("../data/deathrow/deathrow.csv", function(csv) {
   .append("path")
   .attr("d",arc)
   .style("fill",function(d){return d.colorVal;})
-  .attr("transform","translate(300,200)");
-
+  .attr("transform","translate(150,200)");
   ///////
 });
 </script>
+
+</div>
+</div>
+<hr>
